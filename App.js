@@ -1,17 +1,26 @@
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import HomeScreen from "./src/screens/HomeScreen";
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import SigninScreen from "./src/screens/SigninScreen";
+import SignupScreen from "./src/screens/SignupScreen";
+import TrackCreateScreen from "./src/screens/TrackCreateScreen";
+import TrackDetailScreen from "./src/screens/TrackDetailScreen";
+import TrackListScreen from "./src/screens/TrackListScreen";
+import AccountScreen from "./src/screens/AccountScreen";
 
-const navigator = createStackNavigator(
-  {
-    Home: HomeScreen
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      title: "App"
-    }
-  }
-);
+const switchNavigator = createSwitchNavigator({
+  login: createStackNavigator({
+    Signup: SignupScreen,
+    Signin: SigninScreen
+  }),
+  main: createBottomTabNavigator({
+    Account: AccountScreen,
+    TrackCreate: TrackCreateScreen,
+    tracks: createStackNavigator({
+      TrackList: TrackListScreen,
+      TrackDetail: TrackDetailScreen
+    }),
+  })
+});
 
-export default createAppContainer(navigator);
+export default createAppContainer(switchNavigator);
