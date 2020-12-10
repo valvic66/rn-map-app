@@ -1,19 +1,50 @@
-import React from "react";
-import { Text, StyleSheet, Button } from "react-native";
-import { Input } from "react-native-elements";
+import React, { useState } from "react";
+import { StyleSheet, Button, View } from "react-native";
+import { Input, Text } from "react-native-elements";
+import { Space } from '../utils/Space';
+
 const SignupScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
-    <>
-      <Input label="Email" onChangeText={value => console.log(value)} />
-      <Input label="Password" onChangeText={value => console.log(value)} />
-      <Button title="Sign Up" onPress={() => navigation.navigate("Signin")} />
-    </>
+    <View style={styles.container}>
+      <Space>
+        <Text h4>Sign Up</Text>
+      </Space>
+      <Input 
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <Input 
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry
+      />
+      <Space>
+        <Button title="Sign Up" onPress={() => navigation.navigate("Signin")} />
+      </Space>
+    </View>
   );
 };
 
+SignupScreen.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
+
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: 300
   }
 });
 
