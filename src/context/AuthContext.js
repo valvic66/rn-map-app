@@ -1,10 +1,6 @@
 import useAuthContext from './useAuthContext';
 
-// testing of the auth provider
-const initialState = {
-  email: 'valvic6@gmail.com',
-  password: 'Text1234'
-};
+initialState = {};
 
 const authReducer = (state, action) => {
   switch(action.type) {

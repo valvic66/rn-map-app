@@ -6,9 +6,8 @@ import { Context as AuthContext } from '../context/AuthContext';
 
 const SignupScreen = ({ navigation }) => {
   const {state, dispatch} = React.useContext(AuthContext);
-
-  const [email, setEmail] = useState(state.email);
-  const [password, setPassword] = useState(state.password);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.container}>
@@ -32,7 +31,6 @@ const SignupScreen = ({ navigation }) => {
       />
       <Space>
         <Button title="Sign Up" onPress={() => navigation.navigate("Signin")} />
-        {/* <Button title="Add" onPress={() => dispatch({ type: "add_prop", payload: { name: 'Valentin Micu } })} /> */}
       </Space>
     </View>
   );
