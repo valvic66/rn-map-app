@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, Button, View } from "react-native";
 import { Input, Text } from "react-native-elements";
 import { Space } from '../utils/Space';
+import { Context as AuthContext } from '../context/AuthContext';
 
 const SignupScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {state, dispatch} = React.useContext(AuthContext);
+
+  const [email, setEmail] = useState(state.email);
+  const [password, setPassword] = useState(state.password);
 
   return (
     <View style={styles.container}>
@@ -29,6 +32,7 @@ const SignupScreen = ({ navigation }) => {
       />
       <Space>
         <Button title="Sign Up" onPress={() => navigation.navigate("Signin")} />
+        {/* <Button title="Add" onPress={() => dispatch({ type: "add_prop", payload: { name: 'Valentin Micu } })} /> */}
       </Space>
     </View>
   );
