@@ -5,7 +5,7 @@ import { Space } from '../utils/Space';
 import { Context as AuthContext } from '../context/AuthContext';
 
 const SignupScreen = ({ navigation }) => {
-  const {state, dispatch} = React.useContext(AuthContext);
+  const {state, signUp} = React.useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,8 +30,9 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry
       />
       <Space>
-        <Button title="Sign Up" onPress={() => navigation.navigate("Signin")} />
+        <Button title="Sign Up" onPress={signUp} />
       </Space>
+      <Text style={styles.errMsgStyles}>{state.errMsg}</Text>
     </View>
   );
 };
@@ -47,6 +48,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginBottom: 300
+  },
+  errMsgStyles: {
+    color: '#f00',
+    fontSize: 15
   }
 });
 
