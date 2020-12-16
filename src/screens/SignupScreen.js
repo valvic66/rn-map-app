@@ -30,9 +30,10 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry
       />
       <Space>
-        <Button title="Sign Up" onPress={signUp} />
+        <Button title="Sign Up" onPress={() => signUp({email, password})} />
       </Space>
-      <Text style={styles.errMsgStyles}>{state.errMsg}</Text>
+      {state.errMsg ? <Text style={styles.errMsgStyles}>{state.errMsg}</Text> : null}
+      <Text>{state.token} {state.errMsg}</Text>
     </View>
   );
 };
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
   },
   errMsgStyles: {
     color: '#f00',
-    fontSize: 15
+    fontSize: 15,
+    marginLeft: 15
   }
 });
 
