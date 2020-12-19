@@ -1,16 +1,17 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 import STYLES from '../styles';
+import { SignLink } from '../components/SignLink';
 
-const SigninScreen = () => {
+const SigninScreen = ({ navigation }) => {
   return (
     <>
       <Text style={STYLES.headerTextStyles}>SigninScreen</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Space>
-          <Text style={styles.signinLinkStyles}>Sign up if you don't have an account!</Text>
-        </Space>
-      </TouchableOpacity>
+      <SignLink 
+        navigateDestination='Signup'
+        linkText='Sign up if you do not have an account!'
+        navigation={navigation}
+      />
     </>
   );
 };
