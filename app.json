@@ -3,7 +3,6 @@
     "name": "rn-starter",
     "slug": "rn-starter",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +22,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
+    },
     "ios": {
       "supportsTablet": true
     }

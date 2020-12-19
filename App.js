@@ -1,17 +1,15 @@
+import React from "react";
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import HomeScreen from "./src/screens/HomeScreen";
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import switchNavigator from './src/routes/routes';
+import { setNavigator } from './src/utils/navigationRef';
 
-const navigator = createStackNavigator(
-  {
-    Home: HomeScreen
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      title: "App"
-    }
-  }
-);
+const App = createAppContainer(switchNavigator);
 
-export default createAppContainer(navigator);
+export default () => {
+  return (
+    <AuthProvider>
+      <App ref={(navigator) => setNavigator(navigator)} />
+    </AuthProvider>
+  );
+};
