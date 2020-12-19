@@ -39,7 +39,6 @@ const SignupScreen = ({ navigation }) => {
           <Text style={styles.signinLinkStyles}>Sign in if you already have an account!</Text>
         </Space>
       </TouchableOpacity>
-      <Text>{state.token} {state.errMsg}</Text>
     </View>
   );
 };
