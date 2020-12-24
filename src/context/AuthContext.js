@@ -13,8 +13,9 @@ const authReducer = (state, action) => {
     case 'add_error':
       return {...state, errMsg: action.payload};
     case 'signup':
+    case 'signin':
       return {errMsg: '', token: action.payload}
-    default:
+      default:
       return state;
   };
 };
@@ -31,8 +32,20 @@ const signUp = dispatch => async ({ email, password }) => {
   };
 };
 
+const signIn = dispatch => async ({ email, password }) => {
+  try {
+    const response = await trackApi.post('/signin', { email, password });
+    await AsyncStorage.setItem('token', response.data.token);
+    dispatch({ type: 'signin', payload: response.data.token });
+    navigate('TrackList');
+  } catch(err) {
+    console.log(err);
+    dispatch({ type: 'add_error', payload: 'Sign in error!' });
+  };
+};
+
 export const { Context, Provider } = useAuthContext(
   authReducer, 
-  {signUp}, 
+  {signUp, signIn}, 
   initialState
 );
