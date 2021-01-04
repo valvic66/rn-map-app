@@ -3,12 +3,21 @@ import { StyleSheet, View } from "react-native";
 import { SignLink } from '../components/SignLink';
 import { SignForm } from '../components/SignForm';
 import { Context as AuthContext } from '../context/AuthContext';
+import { NavigationEvents } from 'react-navigation';
 
 const SignupScreen = ({ navigation }) => {
-  const {state, signUp} = useContext(AuthContext);
+  const {
+    state, 
+    signUp, 
+    clearMsg
+  } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
+      <NavigationEvents
+        // onWillFocus is a workaround since onWillBlur is buggy
+        onWillFocus={clearMsg}
+      />
       <SignForm
         formName='Sign Up'
         formBtnName='SIGN UP'

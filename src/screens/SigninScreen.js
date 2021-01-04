@@ -3,13 +3,16 @@ import { StyleSheet, View } from "react-native";
 import { SignLink } from '../components/SignLink';
 import { SignForm } from '../components/SignForm';
 import { Context as AuthContext } from '../context/AuthContext';
-
+import { NavigationEvents } from 'react-navigation';
 
 const SigninScreen = ({ navigation }) => {
-  const {state, signIn} = useContext(AuthContext);
+  const {state, signIn, clearMsg} = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
+      <NavigationEvents
+        onWillFocus={clearMsg}
+      />
       <SignForm
         formName='Sign In'
         formBtnName='SIGN IN'
