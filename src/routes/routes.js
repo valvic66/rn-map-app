@@ -20,8 +20,8 @@ const ROUTES = Object.freeze({
     TrackDetail: TrackDetailScreen
   },
   mainRoutes: {
-    Account: AccountScreen,
-    TrackCreate: TrackCreateScreen
+    TrackCreate: TrackCreateScreen,
+    Account: AccountScreen
   }
 });
 
@@ -29,8 +29,8 @@ export default switchNavigator = createSwitchNavigator({
   AuthScreen: EmptyScreen,
   login: createStackNavigator(ROUTES.loginRoutes),
   main: createBottomTabNavigator({
-    ...ROUTES.mainRoutes,
     tracks: createStackNavigator(ROUTES.trackRoutes),
+    ...ROUTES.mainRoutes
   })
 });
 

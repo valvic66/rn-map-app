@@ -17,6 +17,8 @@ const authReducer = (state, action) => {
       return {errMsg: '', token: action.payload};
     case 'clear_error':
       return {...state, errMsg: ''};
+    case 'signout':
+      return { token: null, errMsg: '' };
     default:
       return state;
   };
@@ -52,17 +54,22 @@ const clearMsg = dispatch => () => {
 
 const checkLocalSignIn = dispatch => async () => {
   const token = await AsyncStorage.getItem('token');
-  console.log(token);
   if(token) {
     dispatch({ type: 'signin', payload: token });
     navigate('TrackList');
   } else {
-    navigate('SignUp');
+    navigate('Signup');
   }
+};
+
+const signOut = dispatch => async () => {
+  await AsyncStorage.removeItem('token');
+  dispatch({ type: 'clear_token' });
+  navigate('Signup');
 };
 
 export const { Context, Provider } = useAuthContext(
   authReducer, 
-  {signUp, signIn, clearMsg, checkLocalSignIn}, 
+  {signUp, signIn, clearMsg, checkLocalSignIn, signOut}, 
   initialState
 );
