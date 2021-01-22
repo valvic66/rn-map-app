@@ -1,4 +1,4 @@
-import useAuthContext from './useAuthContext';
+import useAuthContext from './useContext';
 import { AsyncStorage } from 'react-native';
 import trackApi from '../api/trackApi';
 import { navigate } from '../utils/navigationRef';

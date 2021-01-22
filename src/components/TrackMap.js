@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
-import { requestPermissionsAsync } from 'expo-location';
+import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
+import { Context as LocationContext } from '../context/LocationContext';
+
 
 const TrackMap = () => {
+  const { state, addLocation } = useContext(LocationContext);
   const [error, setError] = useState('');
-
-  const points = [
-    { latitude: 44.1905, longitude: 28.6310 },
-    { latitude: 44.2905, longitude: 28.7310 }
-  ];
 
   const startRecording = async () => {
     try {
@@ -18,8 +16,17 @@ const TrackMap = () => {
       if(!permission) {
         setError('permission denied!');
       }
+      await watchPositionAsync({
+        accuracy: Accuracy.High,
+        timeInterval: 1000,
+        distanceInterval: 10
+      },
+      location => {
+        addLocation(location);
+      });
+      
     } catch(err) {
-      console.log(err);
+      console.err(err);
     }
   };
 
@@ -32,15 +39,8 @@ const TrackMap = () => {
       <Text>Map location here</Text>
       <MapView 
         style={styles.mapStyle}
-        initialRegion={{
-          latitude: 44.1905,
-          longitude: 28.6310,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01
-        }}
-      >
-        <Polyline coordinates={points} />
-      </MapView>
+        initialRegion={state.location}
+      />
       {error ? <Text>error</Text> : null}
     </>
   );
