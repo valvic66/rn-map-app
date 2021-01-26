@@ -1,47 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { Text } from 'react-native-elements';
-import { StyleSheet } from 'react-native';
-import MapView, { Polyline } from 'react-native-maps';
-import { requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
-import { Context as LocationContext } from '../context/LocationContext';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import MapView, { Circle } from 'react-native-maps';
 
+const TrackMap = ({ location }) => {
+  if(!location) {
+    return <ActivityIndicator size='large' style={{ marginTop: 250 }} />;
+  }
 
-const TrackMap = () => {
-  const { state, addLocation } = useContext(LocationContext);
-  const [error, setError] = useState('');
-
-  const startRecording = async () => {
-    try {
-      const permission = await requestPermissionsAsync();
-      if(!permission) {
-        setError('permission denied!');
-      }
-      await watchPositionAsync({
-        accuracy: Accuracy.High,
-        timeInterval: 1000,
-        distanceInterval: 10
-      },
-      location => {
-        addLocation(location);
-      });
-      
-    } catch(err) {
-      console.err(err);
-    }
-  };
-
-  useEffect(() => {
-    startRecording();
-  }, []);
-  
   return (
     <>
       <Text>Map location here</Text>
       <MapView 
         style={styles.mapStyle}
-        initialRegion={state.location}
-      />
-      {error ? <Text>error</Text> : null}
+        initialRegion={
+          {
+            ...location,
+            latitudeDelta: 0.01, 
+            longitudeDelta: 0.01
+          }
+        }
+        region={{...location, latitudeDelta: 0.001, longitudeDelta: 0.001}}
+      >
+        <Circle center={location} radius={40} strokeColor='red' fillColor='rgba(256, 0, 0, 0.3)' />
+      </MapView>
     </>
   );
 };
