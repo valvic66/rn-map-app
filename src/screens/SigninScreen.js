@@ -1,20 +1,49 @@
-import React from "react";
-import { Text, StyleSheet } from "react-native";
-import STYLES from '../styles';
+import React, { useContext } from "react";
+import { StyleSheet, View } from "react-native";
+import { SignLink } from '../components/SignLink';
+import { SignForm } from '../components/SignForm';
+import { Context as AuthContext } from '../context/AuthContext';
+import { NavigationEvents } from 'react-navigation';
 
-const SigninScreen = () => {
+const SigninScreen = ({ navigation }) => {
+  const { state, signIn, clearMsg } = useContext(AuthContext);
+
   return (
-    <>
-      <Text style={STYLES.headerTextStyles}>SigninScreen</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Space>
-          <Text style={styles.signinLinkStyles}>Sign up if you don't have an account!</Text>
-        </Space>
-      </TouchableOpacity>
-    </>
+    <View style={styles.container}>
+      <NavigationEvents
+        onWillFocus={clearMsg}
+      />
+      <SignForm
+        formName='Sign In'
+        formBtnName='SIGN IN'
+        errMsg={state.errMsg}
+        onFormSubmit={(email, password) => signIn({email, password})}
+      />
+      <SignLink 
+        navigateDestination='Signup'
+        linkText='Sign up if you do not have an account!'
+        navigation={navigation}
+      />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({});
+SigninScreen.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: 200
+  },
+  signinLinkStyles: {
+    color: '#00f',
+    fontSize: 15
+  }
+});
 
 export default SigninScreen;
